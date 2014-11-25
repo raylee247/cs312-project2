@@ -30,9 +30,14 @@ enter_suspects :- write('Please enter the possible suspects: '), nl,
 	; true).
 
 		
-enter_num_players :- write('Please enter the number of players: '), nl,
+enter_players :- write('Please enter the number of players: '), nl,
 	read(X),
-	assert(num_players(X)).
+	(X \= next ->
+		(card(X) -> write('Player already entered'),nl,
+		enter_players
+		; assert(card(X)), assert(player(X)), enter_players)
+	; true).
+
 
 enter_my_turn :- write('Please enter your turn: '), nl,
 	read(X),
